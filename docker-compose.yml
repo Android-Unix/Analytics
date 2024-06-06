@@ -1,0 +1,21 @@
+version: '3.8'
+
+networks:
+  data-science-network:
+    driver: bridge
+
+services:
+  # The Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    networks:
+      - data-science-network
+    command: streamlit run app/main.py --server.port=8000 --server.address=0.0.0.0
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
